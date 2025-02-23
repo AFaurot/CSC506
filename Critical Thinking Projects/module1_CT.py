@@ -13,7 +13,7 @@ def linear_search(numbers, key):
 def main():
 
     # create a 60 element list
-    random_array = list(range(1, 60))
+    random_array = list(range(1, 61))
     # shuffle the list
     random.shuffle(random_array)
     # input search key
