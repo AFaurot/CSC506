@@ -9,6 +9,7 @@ class RecommendVideoContent:
         # Dictionary to store watch history
         self.watch_history = {}
 
+
     # Function to add video recommendations to the list
     def add_recommendation(self, user_id, video):
 
@@ -37,6 +38,7 @@ class RecommendVideoContent:
 
         # Retrieve history
         return self.watch_history.get(user_id, [])
+
 
 def main():
 
