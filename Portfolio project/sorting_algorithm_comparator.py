@@ -159,8 +159,20 @@ def main():
 
     # numbers array
     numbers = []
+    # Boolean to check is list is too big
+    list_too_big = False
     # List size to allow user input for how large of a list to sort
     list_size = int(input("Enter an integer value for list size: "))
+    # if list_size > 10 million only execute
+    if list_size > 10000000:
+        list_too_big = True
+    while list_too_big:
+        print("Input size is too large, please enter a new value under 10 million")
+        list_size = int(input("Enter an integer value for list size: "))
+        if list_size > 10000000:
+            list_too_big = True
+        else:
+            list_too_big = False
     # If the list is less than 100, append a random number between 0 and 100
     if list_size <= 100:
         for i in range(list_size):
@@ -187,8 +199,10 @@ def main():
         for i in range(list_size):
             numbers.append(random.randint(0, list_size))
     # Copy of numbers array
-    b_numbers = list(numbers)  # Used by bubble sort
-    i_numbers = list(numbers)  # Used by insertion sort
+    # Create arrays for insertion and bubblesort temp arrays if list is less than 50000
+    if list_size <= 50000:
+        b_numbers = list(numbers)  # Used by bubble sort
+        i_numbers = list(numbers)  # Used by insertion sort
     q_numbers = list(numbers)  # Used by quick sort
     h_numbers = list(numbers)  # Used by heap sort
     t_numbers = list(numbers)  # Used by Pythons default sort (Tim Sort)
