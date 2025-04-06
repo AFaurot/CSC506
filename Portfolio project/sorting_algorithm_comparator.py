@@ -131,7 +131,6 @@ def heap_sort(numbers):
     return [heapq.heappop(result) for i in range(len(result))]
 
 
-
 # Simple implementation of Bubble sort
 def bubble_sort(numbers):
 
@@ -162,12 +161,12 @@ def main():
     # Boolean to check is list is too big
     list_too_big = False
     # List size to allow user input for how large of a list to sort
-    list_size = int(input("Enter an integer value for list size: "))
+    list_size = int(input("Enter an integer value for list size (max supported = 10000000): "))
     # if list_size > 10 million only execute
     if list_size > 10000000:
         list_too_big = True
     while list_too_big:
-        print("Input size is too large, please enter a new value under 10 million")
+        print("Input size is too large, please enter a new value, maximum is 10 million")
         list_size = int(input("Enter an integer value for list size: "))
         if list_size > 10000000:
             list_too_big = True
@@ -284,11 +283,19 @@ def main():
     print("\nWould you like to run tests on the same array when it is nearly sorted?")
     run_sorted_tests = input("Continue, Y/N? : ")
     if run_sorted_tests == 'y' or run_sorted_tests == 'Y':
-        # Call swap on safe for larger lists algorithms
+        # If list size is less than 50000 create copies of numbers array for bubble and insertion sorts
+        if list_size > 50000:
+            i_numbers = list(numbers)
+            b_numbers = list(numbers)
+            print("Adding Insertion and Bubble sort because they perform well on nearly sorted lists.\n")
+        # Call swap on lists
         swap(numbers)
         swap(q_numbers)
         swap(h_numbers)
         swap(t_numbers)
+        swap(i_numbers)
+        swap(b_numbers)
+
         print("NEARLY SORTED LAST 10:", numbers[-10:])
         # Sort and time algorithms again
         # Merge sort
@@ -315,31 +322,26 @@ def main():
         t_end_time = time.perf_counter()
         t_execution_time = t_end_time - t_start_time
 
+        # Call to insertion sort and tracking of execution time
+        i_start_time = time.perf_counter()
+        insertion_sort(i_numbers)  # Execute insertion sort
+        i_end_time = time.perf_counter()
+        i_execution_time = i_end_time - i_start_time
+
+        # Call to bubble sort and tracking of execution time
+        b_start_time = time.perf_counter()
+        bubble_sort(b_numbers)  # Execute bubble sort
+        b_end_time = time.perf_counter()
+        b_execution_time = b_end_time - b_start_time
+        print('INSERTION SORT LAST 10:', i_numbers[-10:])
+        print('BUBBLE SORT LAST 10:', b_numbers[-10:])
         print('MERGE SORT LAST 10:', numbers[-10:])
         print('QUICK SORT LAST 10:', q_numbers[-10:])
         print('HEAP SORT LAST 10:', h_numbers[-10:])
         print('TIM SORT LAST 10:', t_numbers[-10:])
 
-        # If list size is less than 50000 call run tests on insertion and merge sort also
-        if list_size <= 50000:
-            swap(i_numbers)
-            swap(b_numbers)
-
-            # Call to insertion sort and tracking of execution time
-            i_start_time = time.perf_counter()
-            insertion_sort(i_numbers)  # Execute insertion sort
-            i_end_time = time.perf_counter()
-            i_execution_time = i_end_time - i_start_time
-
-            # Call to bubble sort and tracking of execution time
-            b_start_time = time.perf_counter()
-            bubble_sort(b_numbers)  # Execute bubble sort
-            b_end_time = time.perf_counter()
-            b_execution_time = b_end_time - b_start_time
-            print('INSERTION SORT LAST 10:', i_numbers[-10:])
-            print('BUBBLE SORT LAST 10:', b_numbers[-10:])
-            print(f"Nearly sorted insertion sort took : {i_execution_time} seconds")
-            print(f"Nearly sorted bubble sort took : {b_execution_time} seconds")
+        print(f"Nearly sorted insertion sort took : {i_execution_time} seconds")
+        print(f"Nearly sorted bubble sort took : {b_execution_time} seconds")
         print(f"Nearly sorted merge sort took : {m_execution_time} seconds")
         print(f"Nearly sorted quick sort took : {q_execution_time} seconds")
         print(f"Nearly sorted heap sort took : {h_execution_time} seconds")
