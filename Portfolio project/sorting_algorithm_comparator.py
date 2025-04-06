@@ -198,7 +198,7 @@ def main():
         for i in range(list_size):
             numbers.append(random.randint(0, list_size))
     # Copy of numbers array
-    # Create arrays for insertion and bubblesort temp arrays if list is less than 50000
+    # Create arrays for insertion and bubblesort if list is less than 50000
     if list_size <= 50000:
         b_numbers = list(numbers)  # Used by bubble sort
         i_numbers = list(numbers)  # Used by insertion sort
